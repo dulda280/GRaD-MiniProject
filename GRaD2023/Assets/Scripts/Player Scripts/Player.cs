@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     // Player Interaction Variables
     private float gatheringTime = 2f;
     private bool gathering = false;
+    private bool canGatherTrash = false;
     private float time = 0.0f;
 
     // Script References
@@ -32,16 +33,22 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMovement();
-        if (gathering)
+        if (canGatherTrash)
         {
-            if (time >= gatheringTime)
+            if (Input.GetKeyDown(KeyCode.T))
             {
-                money += 5;
-                gatheringTime = 2f;
-                gathering = false;
-            } else
-            {
-                gatheringTime -= Time.deltaTime;
+                if (time >= gatheringTime)
+                {
+                    money += 5;
+                    gatheringTime = 2f;
+                    gathering = false;
+                    canGatherTrash = false;
+                    userInterface.UpdatePlayerUI();
+                }
+                else
+                {
+                    gatheringTime -= Time.deltaTime;
+                }
             }
         }
     }
@@ -90,15 +97,11 @@ public class Player : MonoBehaviour
             Debug.Log("Can trade with merchant");
             userInterface.ShowShopInterface(true);
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
         if (collision.gameObject.CompareTag("TrashCan"))
         {
+            canGatherTrash = true;
             Debug.Log("Can look for trash");
-            money += 10;
-            userInterface.UpdatePlayerUI();
         }
     }
 
