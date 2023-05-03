@@ -9,26 +9,19 @@ public class UserInterfaceHandler : MonoBehaviour
     public GameObject shopPanel;
 
     public TextMeshProUGUI physicalHealth;
-    private string physicalHealthString = "Physical Health: ";
-
     public TextMeshProUGUI mentalHealth;
-    private string mentalHealthString = "Mental Health: ";
-
     public TextMeshProUGUI hungerAndThirst;
-    private string hungerAndThirstString = "Hunger & Thirst: ";
-
     public TextMeshProUGUI money;
-    private string moneyString = "Money: ";
 
     public Player player;
 
     // Start is called before the first frame update
     void Start()
     {
-        physicalHealth.text = physicalHealthString + player.GetPlayerPhysicalHealth().ToString();
-        mentalHealth.text = mentalHealthString + player.GetPlayerMentalHealth().ToString();
-        hungerAndThirst.text = hungerAndThirstString + player.GetPlayerHungerAndThirst().ToString();
-        money.text = moneyString + player.GetPlayerMoney().ToString();
+        physicalHealth.text = player.health.ToString();
+        mentalHealth.text = player.mental.ToString();
+        hungerAndThirst.text = player.hungerAndThirst.ToString();
+        money.text = player.money.ToString();
     }
 
     // Update is called once per frame
@@ -44,9 +37,9 @@ public class UserInterfaceHandler : MonoBehaviour
 
     public void UpdatePlayerUI()
     {
-        physicalHealth.text = physicalHealthString + player.GetPlayerPhysicalHealth().ToString();
-        mentalHealth.text = mentalHealthString + player.GetPlayerMentalHealth().ToString();
-        hungerAndThirst.text = hungerAndThirstString + player.GetPlayerHungerAndThirst().ToString();
-        money.text = moneyString + player.GetPlayerMoney().ToString();
+        physicalHealth.text = player.health.ToString();
+        mentalHealth.text = player.mental.ToString();
+        hungerAndThirst.text = player.hungerAndThirst.ToString();
+        money.text = player.money.ToString();
     }
 }
