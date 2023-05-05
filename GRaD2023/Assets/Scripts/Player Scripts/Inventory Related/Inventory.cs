@@ -6,6 +6,8 @@ public class Inventory : MonoBehaviour
 {
 
     public EventHandler eventHandler;
+    public UserInterfaceHandler userInterfaceHandler;
+    public Player player;
 
     #region Singleton
 
@@ -42,6 +44,32 @@ public class Inventory : MonoBehaviour
 
             if (onItemChangedCallback != null)
                 onItemChangedCallback.Invoke();
+        }
+    }
+
+    public void PurchaseItem(Item item)
+    {
+        if (items.Count >= space)
+        {
+            StartCoroutine(eventHandler.ShowEvent("Inventory full...", 1));
+            Debug.Log("Not enough room");
+            return;
+        }
+
+        if (player.money >= item.price)
+        {
+            player.money -= item.price;
+            items.Add(item);
+            StartCoroutine(eventHandler.ShowEvent($"Purchased: \n {item.itemName}", 1));
+            if (onItemChangedCallback != null)
+            {
+                onItemChangedCallback.Invoke();
+            }
+            userInterfaceHandler.UpdatePlayerUI();
+        } else
+        {
+            StartCoroutine(eventHandler.ShowEvent("Not enough money...", 1));
+            return;
         }
     }
 

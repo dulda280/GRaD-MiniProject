@@ -15,6 +15,6 @@ MonoBehaviour:
   itemName: OrangeJuice
   itemDescription: OJ OJ OJ
   icon: {fileID: -1909053512, guid: 3fbe6f74b19d19c4ca9553df6cf02d8d, type: 3}
-  price: 5
+  price: 10
   showInInventory: 1
   type: 1

@@ -16,6 +16,7 @@ public class InventoryUI : MonoBehaviour
     {
         inventory = Inventory.instance;
         inventory.onItemChangedCallback += UpdateUI;
+        UpdateUI();
     }
 
     // Check to see if we should open/close the inventory

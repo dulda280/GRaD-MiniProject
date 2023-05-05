@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public Rigidbody2D rigidBody;
     Vector2 movement;
 
+    public Animator animator;
+
     // Script References
     public Inventory inventory;
     public InventoryUI inventoryUI;
@@ -25,7 +27,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inventoryUI.UpdateUI();
     }
 
     // Update is called once per frame
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             money += 10;
+            userInterface.UpdatePlayerUI();
         }
     }
 
@@ -55,7 +57,9 @@ public class Player : MonoBehaviour
 
     private void PlayerMovement()
     {
+        animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
         movement.x = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
         movement.y = Input.GetAxisRaw("Vertical");
     }
 

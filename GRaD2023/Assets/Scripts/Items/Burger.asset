@@ -15,6 +15,6 @@ MonoBehaviour:
   itemName: Burger
   itemDescription: Flamestone Special
   icon: {fileID: -1341297968, guid: 3fbe6f74b19d19c4ca9553df6cf02d8d, type: 3}
-  price: 0
+  price: 40
   showInInventory: 1
   type: 1

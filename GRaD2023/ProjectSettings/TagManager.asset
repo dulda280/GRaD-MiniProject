@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Merchant
   - TrashCan
+  - LeadNPC
   layers:
   - Default
   - TransparentFX
