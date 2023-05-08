@@ -9,9 +9,9 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     // Player Variables
-    private int _physicalHealth = 10;
-    private int _mentalHealth = 10;
-    private int _hungerAndThirst = 10;
+    float _physicalHealth = 10;
+    float _mentalHealth = 10;
+    private float _hungerAndThirst = 40;
     private int _money = 15;
     private float movementSpeed = 5f;
     public Rigidbody2D rigidBody;
@@ -85,8 +85,8 @@ public class Player : MonoBehaviour
 
 
     // Getters and Setters
-    public int health { get { return _physicalHealth; } set { _physicalHealth = value; }}
-    public int mental { get { return _mentalHealth; } set { _mentalHealth = value; }}
-    public int hungerAndThirst { get { return _hungerAndThirst; } set { _hungerAndThirst = value; }}
+    public float health { get { return _physicalHealth; } set { _physicalHealth = value; }}
+    public float mental { get { return _mentalHealth; } set { _mentalHealth = value; }}
+    public float hungerAndThirst { get { return _hungerAndThirst; } set { _hungerAndThirst = value; }}
     public int money { get { return _money; } set { _money = value; }}
 }

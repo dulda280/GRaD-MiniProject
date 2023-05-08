@@ -23,16 +23,24 @@ public class TimeScript : MonoBehaviour
     public TextMeshProUGUI testTimer;
 
     public bool playing = true;
-
+    private bool nightTimeCountDown = false;
     private string currentTime;
     float hours;
     float minutes;
+
+    float tempDecay;
 
     private float dayEndTime = 1440f;
     private float wakeUpTime = 480f;
     private bool dayEnd = false;
     private float timer = 0;
 
+    private bool starvationBool = true;
+
+    public EventHandler eventHandler;
+    public UnityEngine.Rendering.Universal.Light2D sun;
+    public Player player;
+    public GameObject trafficLights;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +54,7 @@ public class TimeScript : MonoBehaviour
                 timer += 3 * Time.deltaTime;
                 UpdateTime(timer);
                 //Debug.Log(timer);
+                statDecay(player, timer, 0.0025f, 0.01f, 0.005f);
 	    }
     }
 
@@ -59,6 +68,11 @@ public class TimeScript : MonoBehaviour
         secondHour.text = currentTime[1].ToString();
         firstMinute.text = currentTime[2].ToString();
         secondMinute.text = currentTime[3].ToString();
+
+        player.hungerAndThirst -= 30f;
+        nightTimeCountDown = false;
+        sun.intensity = 1.0f;
+        trafficLights.SetActive(false);
 
     }
 
@@ -80,5 +94,43 @@ public class TimeScript : MonoBehaviour
         //secondMinute.text = currentTime[3].ToString();
         testTimer.text = Mathf.FloorToInt(time-480).ToString();
         
+    }
+
+    private void statDecay(Player target, float time, float hungerDecay, float healtDecay, float mentalHealthDecay){
+
+        
+        if(Mathf.Ceil(time) % 3 == 0){
+            target.hungerAndThirst -= hungerDecay;
+            //Debug.Log("playerhunger; " + target.hungerAndThirst);
+
+            if(target.hungerAndThirst <= 0){
+                target.health -= healtDecay;
+                target.mental -= mentalHealthDecay;
+
+                if(starvationBool){
+                    StartCoroutine(eventHandler.ShowEvent("I'm so hungry it's starting to hurt...", 4));
+                    starvationBool = false;
+                }
+                
+
+            }
+            if(target.hungerAndThirst < 0){
+                target.hungerAndThirst = 0;
+            }
+        }
+    }
+
+    private void timeProgression(UnityEngine.Rendering.Universal.Light2D light, float time){
+        if(currentTime[0] == 1 && currentTime[1] == 4){
+            nightTimeCountDown = true;
+        }
+        if(nightTimeCountDown){
+            if(Mathf.Ceil(time) % 3 == 0){
+                light.intensity -= 0.01f;
+            }
+        }
+        if(currentTime[0] == 1 && currentTime[1] == 8){
+            trafficLights.SetActive(true);
+        }
     }
 }

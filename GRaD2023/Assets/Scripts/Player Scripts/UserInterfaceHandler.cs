@@ -27,7 +27,7 @@ public class UserInterfaceHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdatePlayerUI();
     }
 
     public void ShowShopInterface(bool state)
@@ -37,9 +37,10 @@ public class UserInterfaceHandler : MonoBehaviour
 
     public void UpdatePlayerUI()
     {
-        physicalHealth.text = player.health.ToString();
-        mentalHealth.text = player.mental.ToString();
-        hungerAndThirst.text = player.hungerAndThirst.ToString();
+        
+        physicalHealth.text = Mathf.Ceil(player.health).ToString();
+        mentalHealth.text = Mathf.Ceil(player.mental).ToString();
+        hungerAndThirst.text = Mathf.Ceil(player.hungerAndThirst).ToString();
         money.text = player.money.ToString();
     }
 }
