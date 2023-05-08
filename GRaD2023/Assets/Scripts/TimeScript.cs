@@ -51,11 +51,10 @@ public class TimeScript : MonoBehaviour
     void Update()
     {
         if(playing == true){
-                timer += 10 * Time.deltaTime;
+                timer += 3 * Time.deltaTime;
                 UpdateTime(timer);
                 //Debug.Log(timer);
                 statDecay(player, timer, 0.0025f, 0.01f, 0.005f);
-                timeProgression(sun, timer);
 	    }
     }
 
@@ -122,20 +121,16 @@ public class TimeScript : MonoBehaviour
     }
 
     private void timeProgression(UnityEngine.Rendering.Universal.Light2D light, float time){
-        if(Mathf.Ceil(time) == 840){
+        if(currentTime[0] == 1 && currentTime[1] == 4){
             nightTimeCountDown = true;
-            Debug.Log("Nightime approaches");
         }
         if(nightTimeCountDown){
             if(Mathf.Ceil(time) % 3 == 0){
-                light.intensity -= 0.0003f;
+                light.intensity -= 0.01f;
             }
         }
-        if(Mathf.Ceil(time) == 1080){
+        if(currentTime[0] == 1 && currentTime[1] == 8){
             trafficLights.SetActive(true);
-        }
-        if(light.intensity <= 0.15f){
-            light.intensity = 0.15f;
         }
     }
 }
