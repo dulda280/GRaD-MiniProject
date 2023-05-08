@@ -57,10 +57,13 @@ public class Player : MonoBehaviour
 
     private void PlayerMovement()
     {
-        animator.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
         movement.x = Input.GetAxisRaw("Horizontal");
-        animator.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
         movement.y = Input.GetAxisRaw("Vertical");
+
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

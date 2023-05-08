@@ -26,15 +26,11 @@ public class NPC : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rigidBody;
     public float movementSpeed = 1f;
+    Vector2 movement;
 
     public GameObject[] pathToWalk;
     public int currentWaypoint;
     public bool hasReachedDestination;
-
-    private bool walkingLeft;
-    private bool walkingRight;
-    private bool walkingUp;
-    private bool walkingDown;
 
     // Start is called before the first frame update
     void Start()
@@ -46,10 +42,12 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (!isStationary)
         {
             NPCPathMovement();
         }
+        */
         if (Input.GetKeyDown(KeyCode.E) && playerIsWithinRange)
         {
             playerIsInteracting = true;
@@ -71,28 +69,12 @@ public class NPC : MonoBehaviour
 
     public void NPCPathMovement()
     {
-        animator.SetFloat("Horizontal", transform.position.x);
-        animator.SetFloat("Vertical", transform.position.y);
-        if (transform.position.x > 0.1)
-        {
-            walkingRight = true;
-            animator.SetBool("WalkingRight", true); 
-        } else if (transform.position.x < 0.1)
-        {
-            walkingLeft = true;
-            animator.SetBool("WalkingLeft", true);
-        }
-
-        if (transform.position.y > 0.1)
-        {
-            walkingUp = true;
-            animator.SetBool("WalkingUp", true);
-        } else if (transform.position.y < -0.94)
-        {
-            walkingDown = true;
-            animator.SetBool("WalkingDown", true);
-        }
+        animator.SetFloat("Horizontal", rigidBody.position.x);
+        animator.SetFloat("Vertical", rigidBody.position.y);
+        
+        
         float step = movementSpeed * Time.deltaTime;
+        animator.SetFloat("Speed", step);
         if (!hasReachedDestination && !playerIsInteracting)
         {
             transform.position = Vector2.MoveTowards(transform.position, pathToWalk[currentWaypoint].transform.position, step);
@@ -101,7 +83,6 @@ public class NPC : MonoBehaviour
             if (Vector2.Distance(transform.position, pathToWalk[currentWaypoint].transform.position) < 0.1f)
             {
                 hasReachedDestination = true;
-                ResetMovementVariables();
                 currentWaypoint++;
                 if (currentWaypoint >= 4)
                 {
@@ -112,18 +93,6 @@ public class NPC : MonoBehaviour
             }
         }
     }
-
-    public void ResetMovementVariables()
-    {
-        walkingLeft = false;
-        walkingRight = false;
-        walkingUp = false;
-        walkingDown = false;
-        animator.SetBool("WalkingLeft", false);
-        animator.SetBool("WalkingRight", false);
-        animator.SetBool("WalkingUp", false);
-        animator.SetBool("WalkingDown", false);
-}
 
     public void ResetText()
     {
