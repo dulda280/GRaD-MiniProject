@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace DialogueSystemSpace{
     public class DialogueLine : DialogueSystem
@@ -35,13 +36,28 @@ namespace DialogueSystemSpace{
             {
                 nextButton.SetActive(true);
             }
+            if(dialogueCounter == 1 || dialogueCounter == 3 || dialogueCounter == 7 || dialogueCounter == 10 || dialogueCounter == 12){
+                textColor = Color.red;
+                Debug.Log("red");
+            }
+            if(dialogueCounter == 2 || dialogueCounter == 6 || dialogueCounter == 9 || dialogueCounter == 11){
+                textColor = Color.cyan;
+                Debug.Log("cyan");
+            }
+            if(dialogueCounter == 14){
+                
+                SceneManager.LoadScene("Main");
+            }
         }
 
         public void NextDialogue(){
             dialogueCounter += 1;
+            textHolder.text = "";
             StartCoroutine(WriteText(input[dialogueCounter], textHolder, textColor, sound));
             nextButton.SetActive(false);
             Debug.Log("called");
+            
+
         }
     }
 }
