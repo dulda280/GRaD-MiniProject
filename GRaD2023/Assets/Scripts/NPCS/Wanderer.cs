@@ -50,7 +50,6 @@ public class Wanderer : MonoBehaviour
         {
             animator.SetFloat("Horizontal", xDir);
             animator.SetFloat("Vertical", yDir);
-            animator.SetFloat("Speed", rb.);
         }
 
         if (decisionTimeCount > 0) decisionTimeCount -= Time.deltaTime;
