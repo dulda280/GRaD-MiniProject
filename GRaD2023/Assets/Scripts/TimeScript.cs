@@ -34,9 +34,8 @@ public class TimeScript : MonoBehaviour
 
     private bool diedBool = false;
     private bool _privateDeathBool;
-    private float dayEndTime = 1440f;
+    public float dayEndTime = 1440f;
     private float wakeUpTime = 480f;
-    private bool dayEnd = false;
     private float timer = 0;
 
     private bool starvationBool = true;
@@ -50,6 +49,7 @@ public class TimeScript : MonoBehaviour
 
     public float timeVal{ get { return timer; } set{timer = value;}}
     public float intensityMod{get {return sun.intensity;} set{sun.intensity = value;}}
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -104,7 +104,12 @@ public class TimeScript : MonoBehaviour
         
         //secondMinute.text = currentTime[3].ToString();
         testTimer.text = Mathf.FloorToInt(time-480).ToString();
-        
+        if(time >= dayEndTime){
+            StartCoroutine(player.eventHandler.ShowBigEvent($"You slept on the streets tonight, which is not very healthy. Find shelter before midnight.", 4));
+            //ResetTime();
+            player.mental -= 20;
+            player.health -= 20;
+        }
         
 
     }
@@ -143,7 +148,7 @@ public class TimeScript : MonoBehaviour
                 light.intensity -= 0.0003f;
             }
         }
-        if(Mathf.Ceil(time) == 1080){
+        if(Mathf.Ceil(time) >= 1080){
             trafficLights.SetActive(true);
         }
         if(light.intensity <= 0.15f){

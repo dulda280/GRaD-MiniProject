@@ -132,8 +132,10 @@ public class Player : MonoBehaviour
         {
             money -= motelSleepPrice;
             timeScript.ResetTime();
-            StartCoroutine(eventHandler.ShowEvent($"I feel well rested", 1));
+            StartCoroutine(eventHandler.ShowBigEvent($"I feel well rested", 3));
             hasAlreadyWorkedToday = false;
+            mental += 10;
+
         } else
         {
             StartCoroutine(eventHandler.ShowEvent($"I can't afford to stay at this Motel, price is {motelSleepPrice}$ and you have {money}$", 3));
@@ -148,7 +150,7 @@ public class Player : MonoBehaviour
             {
                 var earnedMoney = (jobDeliveryDriverSalary * jobDeliveryDriverWorkHours);
                 money += Mathf.FloorToInt(earnedMoney);
-                StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobDeliveryDriverWorkHours} hrs worked", 3));
+                StartCoroutine(eventHandler.ShowBigEvent($"I earned {earnedMoney}$ for a total of {jobDeliveryDriverWorkHours} hrs worked", 3));
                 // Pass time by time script
                 workTimeProgression(jobDeliveryDriverWorkHours, timeScript);
                 mental -= jobDeliveryDriverWorkHours * 3;
@@ -158,7 +160,7 @@ public class Player : MonoBehaviour
             {
                 var earnedMoney = (jobOfficeWorkerSalary * jobOfficeWorkerWorkHours);
                 money += Mathf.FloorToInt(earnedMoney);
-                StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobOfficeWorkerWorkHours} hrs worked", 3));
+                StartCoroutine(eventHandler.ShowBigEvent($"I earned {earnedMoney}$ for a total of {jobOfficeWorkerWorkHours} hrs worked", 3));
                 // Pass time by time script
                 workTimeProgression(jobOfficeWorkerWorkHours, timeScript);
                 mental -= jobOfficeWorkerWorkHours * 3;
@@ -168,7 +170,7 @@ public class Player : MonoBehaviour
             {
                 var earnedMoney = (jobCashierSalary * jobCashierWorkHours);
                 money += Mathf.FloorToInt(earnedMoney);
-                StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobCashierWorkHours} hrs worked", 3));
+                StartCoroutine(eventHandler.ShowBigEvent($"I earned {earnedMoney}$ for a total of {jobCashierWorkHours} hrs worked", 3));
                 // Pass time by time script
                 workTimeProgression(jobCashierWorkHours, timeScript);
                 mental -= jobCashierWorkHours * 3;
@@ -254,7 +256,7 @@ public class Player : MonoBehaviour
     private void workTimeProgression(float timeWorked, TimeScript timeObj){
         var tempTime = timeObj.timeVal;
         timeObj.timeVal = tempTime + (timeWorked*60f);
-        timeObj.intensityMod = timeObj.intensityMod - (timeWorked/20f);
+        timeObj.intensityMod = timeObj.intensityMod - (timeWorked/15f);
     }
 
     // Getters and Setters
