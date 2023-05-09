@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EventHandler : MonoBehaviour
 {
@@ -25,6 +26,15 @@ public class EventHandler : MonoBehaviour
         ShowBigElement(bigEventBG, true);
         yield return new WaitForSeconds(delay);
         
+        ShowBigElement(bigEventBG, false);
+    }
+
+    public IEnumerator ShowEndgameEvent(string eventMessage, float delay){
+        bigEventText.text = eventMessage;
+        
+        ShowBigElement(bigEventBG, true);
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
         ShowBigElement(bigEventBG, false);
     }
 

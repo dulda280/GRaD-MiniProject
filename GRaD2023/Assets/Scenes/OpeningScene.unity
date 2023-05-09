@@ -1900,7 +1900,6 @@ GameObject:
   m_Component:
   - component: {fileID: 79706772}
   - component: {fileID: 79706771}
-  - component: {fileID: 79706770}
   - component: {fileID: 79706769}
   - component: {fileID: 79706768}
   - component: {fileID: 79706767}
@@ -1969,41 +1968,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &79706770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79706766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48caac26cd59a2847bdb5d41610eace9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  npcName: MJ
-  isStationary: 0
-  dialoguePanel: {fileID: 0}
-  continueButton: {fileID: 0}
-  dialogueTitle: {fileID: 0}
-  dialogueText: {fileID: 0}
-  dialogue:
-  - Yo Whaddup
-  - You've been hit by.....
-  - a smooth criminal!
-  wordSpeed: 0.06
-  playerIsWithinRange: 0
-  playerIsInteracting: 0
-  animator: {fileID: 79706767}
-  rigidBody: {fileID: 0}
-  movementSpeed: 1
-  pathToWalk:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  currentWaypoint: 0
-  hasReachedDestination: 0
 --- !u!212 &79706771
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7396,7 +7360,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventText: {fileID: 1660654766}
+  bigEventText: {fileID: 0}
   eventBG: {fileID: 519889793}
+  bigEventBG: {fileID: 0}
 --- !u!222 &440145282
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16821,7 +16787,6 @@ GameObject:
   m_Component:
   - component: {fileID: 814860714}
   - component: {fileID: 814860713}
-  - component: {fileID: 814860712}
   - component: {fileID: 814860711}
   - component: {fileID: 814860710}
   - component: {fileID: 814860709}
@@ -16890,41 +16855,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &814860712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 814860708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48caac26cd59a2847bdb5d41610eace9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  npcName: MJ
-  isStationary: 0
-  dialoguePanel: {fileID: 0}
-  continueButton: {fileID: 0}
-  dialogueTitle: {fileID: 0}
-  dialogueText: {fileID: 0}
-  dialogue:
-  - Yo Whaddup
-  - You've been hit by.....
-  - a smooth criminal!
-  wordSpeed: 0.06
-  playerIsWithinRange: 0
-  playerIsInteracting: 0
-  animator: {fileID: 814860709}
-  rigidBody: {fileID: 0}
-  movementSpeed: 1
-  pathToWalk:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  currentWaypoint: 0
-  hasReachedDestination: 0
 --- !u!212 &814860713
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18935,6 +18865,7 @@ MonoBehaviour:
   secondMinute: {fileID: 2133777633}
   testTimer: {fileID: 168112430}
   playing: 1
+  dayEndTime: 1440
   eventHandler: {fileID: 440145281}
   sun: {fileID: 0}
   player: {fileID: 0}

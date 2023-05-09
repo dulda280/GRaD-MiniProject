@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.Video.VideoPlayer;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -213,7 +214,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("GameEndCollider"))
         {
-            // Change Scene
+            endGame();
         }
 
         if (collision.gameObject.CompareTag("FoodShop"))
@@ -298,6 +299,10 @@ public class Player : MonoBehaviour
         var tempTime = timeObj.timeVal;
         timeObj.timeVal = tempTime + (timeWorked*60f);
         timeObj.intensityMod = timeObj.intensityMod - (timeWorked/15f);
+    }
+
+    private void endGame(){
+        StartCoroutine(eventHandler.ShowEndgameEvent($"\n Congratulations, you found a safe shelter of an accepting community! \n You contributed {money}$ to the shelter!\n \n Thank you for playing", 8));
     }
 
     // Getters and Setters
