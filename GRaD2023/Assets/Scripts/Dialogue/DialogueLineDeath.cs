@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 namespace DialogueSystemSpace{
-    public class DialogueLine : DialogueSystem
+    public class DialogueLineDeath : DialogueSystem
     {
         private TextMeshProUGUI textHolder;
         [Header ("Text design")]
@@ -36,17 +36,12 @@ namespace DialogueSystemSpace{
             {
                 nextButton.SetActive(true);
             }
-            if(dialogueCounter == 1 || dialogueCounter == 3 || dialogueCounter == 7 || dialogueCounter == 10 || dialogueCounter == 12){
-                textColor = Color.red;
-                Debug.Log("red");
-            }
-            if(dialogueCounter == 2 || dialogueCounter == 6 || dialogueCounter == 9 || dialogueCounter == 11){
-                textColor = Color.cyan;
-                Debug.Log("cyan");
-            }
-            if(dialogueCounter == 14){
+            if(dialogueCounter == 1){
                 
-                SceneManager.LoadScene(2, LoadSceneMode.Single);
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
+            }
+            if(dialogueCounter > 1){
+                dialogueCounter = 1;
             }
         }
 

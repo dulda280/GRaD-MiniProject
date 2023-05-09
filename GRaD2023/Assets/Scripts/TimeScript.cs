@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class TimeScript : MonoBehaviour
 {
@@ -30,6 +32,8 @@ public class TimeScript : MonoBehaviour
 
     float tempDecay;
 
+    private bool diedBool = false;
+    private bool _privateDeathBool;
     private float dayEndTime = 1440f;
     private float wakeUpTime = 480f;
     private bool dayEnd = false;
@@ -41,6 +45,9 @@ public class TimeScript : MonoBehaviour
     public UnityEngine.Rendering.Universal.Light2D sun;
     public Player player;
     public GameObject trafficLights;
+
+    public bool deathBool{ get { return _privateDeathBool; } set { _privateDeathBool= value; }}
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +63,7 @@ public class TimeScript : MonoBehaviour
                 //Debug.Log(timer);
                 statDecay(player, timer, 0.0025f, 0.01f, 0.005f);
                 timeProgression(sun, timer);
+                trackVitals(player);
 	    }
     }
 
@@ -136,6 +144,27 @@ public class TimeScript : MonoBehaviour
         }
         if(light.intensity <= 0.15f){
             light.intensity = 0.15f;
+        }
+    }
+
+    private void trackVitals(Player person){
+        if(person.health <= 0){
+            diedBool = true;
+            _privateDeathBool = true;
+        }
+        if(person.mental <= 0){
+            diedBool = true;
+            _privateDeathBool = false;
+        }
+        if(diedBool){
+            if(_privateDeathBool == true){
+                SceneManager.LoadScene(3, LoadSceneMode.Single);
+                diedBool = false;
+            }
+            if(_privateDeathBool == false){
+                SceneManager.LoadScene(4, LoadSceneMode.Single);
+                diedBool = false;
+            }
         }
     }
 }
