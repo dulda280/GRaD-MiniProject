@@ -59,7 +59,7 @@ public class TimeScript : MonoBehaviour
 	    }
     }
 
-    private void ResetTime(){
+    public void ResetTime(){
         timer = wakeUpTime;
         hours = Mathf.FloorToInt(timer / 60);
         minutes = Mathf.FloorToInt(timer % 60);
