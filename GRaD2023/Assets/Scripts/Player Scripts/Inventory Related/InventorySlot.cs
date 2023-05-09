@@ -54,12 +54,29 @@ public class InventorySlot : MonoBehaviour
             if (item.type == Item.Type.Consumable)
             {
                 item.Use();
+                inventory.audioManager.ConsumeItemSFX();
                 if (inventory.CheckForConsumables())
                 {
-                    inventory.Remove(item);
-                    player.hungerAndThirst += 5;
-                    player.userInterface.UpdatePlayerUI();
-                    player.inventoryUI.UpdateUI();
+                    
+                    if (player.health >= 100 || player.mental >= 100 || player.hungerAndThirst >= 100 )
+                    {
+                        player.health = 100;
+                        player.mental = 100;
+                        player.hungerAndThirst = 100;
+                        player.userInterface.UpdatePlayerUI();
+                        player.inventoryUI.UpdateUI();
+                        inventory.Remove(item);
+                    } else
+                    {
+                        player.hungerAndThirst += item.foodAdd;
+                        player.health += item.physicalHealthAdd;
+                        player.health -= item.physicalHealthRemove;
+                        player.mental += item.mentalHealthAdd;
+                        player.mental -= item.mentalHealthRemove;
+                        player.userInterface.UpdatePlayerUI();
+                        player.inventoryUI.UpdateUI();
+                        inventory.Remove(item);
+                    }
                 }
             }
         }

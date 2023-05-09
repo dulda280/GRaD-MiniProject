@@ -16,5 +16,10 @@ MonoBehaviour:
   itemDescription: Lean?
   icon: {fileID: 21300000, guid: f78599d9d8326bd4887b6eb03c729dc6, type: 3}
   price: 75
+  foodAdd: 0
+  physicalHealthAdd: 60
+  physicalHealthRemove: 0
+  mentalHealthAdd: 0
+  mentalHealthRemove: 0
   showInInventory: 1
   type: 1

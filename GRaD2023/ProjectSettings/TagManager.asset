@@ -12,6 +12,7 @@ TagManager:
   - Supermarket
   - Office
   - Pharmacy
+  - FoodShop
   layers:
   - Default
   - TransparentFX

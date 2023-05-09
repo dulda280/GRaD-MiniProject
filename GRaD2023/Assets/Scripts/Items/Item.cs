@@ -10,6 +10,11 @@ public class Item : ScriptableObject
     public string itemDescription = "New Description";
     public Sprite icon;
     public int price = 0;
+    public float foodAdd = 0;
+    public int physicalHealthAdd = 0;
+    public int physicalHealthRemove = 0;
+    public int mentalHealthAdd = 0;
+    public int mentalHealthRemove = 0;
     public bool showInInventory = true;
     public enum Type { Default, Consumable}
     public Type type = Type.Default;

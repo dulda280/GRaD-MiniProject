@@ -16,5 +16,10 @@ MonoBehaviour:
   itemDescription: straight up healing
   icon: {fileID: 21300000, guid: 0b86f26359c44e242ae620895b154c44, type: 3}
   price: 25
+  foodAdd: 0
+  physicalHealthAdd: 20
+  physicalHealthRemove: 0
+  mentalHealthAdd: 0
+  mentalHealthRemove: 0
   showInInventory: 1
   type: 1

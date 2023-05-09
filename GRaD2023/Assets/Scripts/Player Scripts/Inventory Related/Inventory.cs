@@ -5,6 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
 
+    public AudioManager audioManager;
     public EventHandler eventHandler;
     public UserInterfaceHandler userInterfaceHandler;
     public Player player;
@@ -58,6 +59,7 @@ public class Inventory : MonoBehaviour
 
         if (player.money >= item.price)
         {
+            audioManager.BoughtItemSFX();
             player.money -= item.price;
             items.Add(item);
             StartCoroutine(eventHandler.ShowEvent($"Purchased: \n {item.itemName}", 1));
