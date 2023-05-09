@@ -12,6 +12,8 @@ public class NPC : MonoBehaviour
     public string npcName;
     public bool isStationary;
 
+    public Player player;
+
     public GameObject dialoguePanel;
     public GameObject continueButton;
     public TextMeshProUGUI dialogueTitle;
@@ -25,12 +27,6 @@ public class NPC : MonoBehaviour
 
     public Animator animator;
     public Rigidbody2D rigidBody;
-    public float movementSpeed = 1f;
-    Vector2 movement;
-
-    public GameObject[] pathToWalk;
-    public int currentWaypoint;
-    public bool hasReachedDestination;
 
     // Start is called before the first frame update
     void Start()
@@ -48,14 +44,15 @@ public class NPC : MonoBehaviour
             NPCPathMovement();
         }
         */
-        if (Input.GetKeyDown(KeyCode.E) && playerIsWithinRange)
+        if (Input.GetKeyDown(KeyCode.E) && playerIsWithinRange && !playerIsInteracting)
         {
             playerIsInteracting = true;
-            if (dialoguePanel.activeInHierarchy)
+            if (dialoguePanel.activeInHierarchy && !playerIsInteracting)
             {
                 ResetText();
             } else
             {
+                dialogueTitle.text = npcName;
                 dialoguePanel.SetActive(true);
                 StartCoroutine(TypeDialogue());
             }
@@ -64,33 +61,6 @@ public class NPC : MonoBehaviour
         if (dialogueText.text == dialogue[index])
         {
             continueButton.SetActive(true);
-        }
-    }
-
-    public void NPCPathMovement()
-    {
-        animator.SetFloat("Horizontal", rigidBody.position.x);
-        animator.SetFloat("Vertical", rigidBody.position.y);
-        
-        
-        float step = movementSpeed * Time.deltaTime;
-        animator.SetFloat("Speed", step);
-        if (!hasReachedDestination && !playerIsInteracting)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, pathToWalk[currentWaypoint].transform.position, step);
-            // If we have reached the destination
-            
-            if (Vector2.Distance(transform.position, pathToWalk[currentWaypoint].transform.position) < 0.1f)
-            {
-                hasReachedDestination = true;
-                currentWaypoint++;
-                if (currentWaypoint >= 4)
-                {
-                    currentWaypoint = 0;
-                }
-                transform.position = Vector2.MoveTowards(transform.position, pathToWalk[currentWaypoint].transform.position, step);
-                hasReachedDestination = false;
-            }
         }
     }
 
@@ -120,6 +90,7 @@ public class NPC : MonoBehaviour
             StartCoroutine(TypeDialogue());
         } else
         {
+            player.OnDialogEnded();
             ResetText();
         }
     }

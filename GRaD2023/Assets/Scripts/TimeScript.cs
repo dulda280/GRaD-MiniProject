@@ -81,6 +81,7 @@ public class TimeScript : MonoBehaviour
         secondMinute.text = currentTime[3].ToString();
 
         player.hungerAndThirst -= 30f;
+        player.workState = false;
         nightTimeCountDown = false;
         sun.intensity = 1.0f;
         trafficLights.SetActive(false);
@@ -106,7 +107,7 @@ public class TimeScript : MonoBehaviour
         testTimer.text = Mathf.FloorToInt(time-480).ToString();
         if(time >= dayEndTime){
             StartCoroutine(player.eventHandler.ShowBigEvent($"You slept on the streets tonight, which is not very healthy. Find shelter before midnight.", 4));
-            //ResetTime();
+            ResetTime();
             player.mental -= 20;
             player.health -= 20;
         }

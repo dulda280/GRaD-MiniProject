@@ -10,6 +10,7 @@ public class UserInterfaceHandler : MonoBehaviour
 {
     public GameObject supermarketShopPanel;
     public GameObject pharmacyShopPanel;
+    public GameObject drugShopPanel;
     public GameObject escapeMenu;
     public Button quitToMenuButton;
     public Button continueButton;
@@ -63,6 +64,11 @@ public class UserInterfaceHandler : MonoBehaviour
         if (shopType == "Pharmacy")
         {
             pharmacyShopPanel.SetActive(state);
+        }
+
+        if (shopType == "Druggie")
+        {
+            drugShopPanel.SetActive(state);
         }
     }
 

@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     // Player Variables
     [Range(0, 100)]private float _physicalHealth = 100;
     [Range(0, 100)] private float _mentalHealth = 50;
-    [Range(0, 100)] private float _hungerAndThirst = 40;
+    [Range(0, 100)] private float _hungerAndThirst = 80;
     [Range(0, 99999)] private int _money = 5;
     private float movementSpeed = 5f;
     public Rigidbody2D rigidBody;
@@ -49,6 +49,13 @@ public class Player : MonoBehaviour
     private int jobCashierWorkHours = 6;
     private bool canWorkAtjobCashier = false;
 
+    // NPC Progress
+    private int npcProgress = 0;
+
+    // Game End Objects
+    public GameObject shelterEntrance;
+    public GameObject finishLight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +76,11 @@ public class Player : MonoBehaviour
 
     private void PlayerInputChecker()
     {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            OnDialogEnded();
+        }
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             money += 10;
@@ -148,6 +160,7 @@ public class Player : MonoBehaviour
         {
             if (jobType == jobDeliveryDriver)
             {
+                inventory.audioManager.JobPayoutSFX();
                 var earnedMoney = (jobDeliveryDriverSalary * jobDeliveryDriverWorkHours);
                 money += Mathf.FloorToInt(earnedMoney);
                 StartCoroutine(eventHandler.ShowBigEvent($"I earned {earnedMoney}$ for a total of {jobDeliveryDriverWorkHours} hrs worked", 3));
@@ -158,6 +171,7 @@ public class Player : MonoBehaviour
 
             if (jobType == jobOfficeWorker)
             {
+                inventory.audioManager.JobPayoutSFX();
                 var earnedMoney = (jobOfficeWorkerSalary * jobOfficeWorkerWorkHours);
                 money += Mathf.FloorToInt(earnedMoney);
                 StartCoroutine(eventHandler.ShowBigEvent($"I earned {earnedMoney}$ for a total of {jobOfficeWorkerWorkHours} hrs worked", 3));
@@ -168,6 +182,7 @@ public class Player : MonoBehaviour
 
             if (jobType == jobCashier)
             {
+                inventory.audioManager.JobPayoutSFX();
                 var earnedMoney = (jobCashierSalary * jobCashierWorkHours);
                 money += Mathf.FloorToInt(earnedMoney);
                 StartCoroutine(eventHandler.ShowBigEvent($"I earned {earnedMoney}$ for a total of {jobCashierWorkHours} hrs worked", 3));
@@ -182,9 +197,25 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnDialogEnded()
+    {
+        if (npcProgress >= 2)
+        {
+            shelterEntrance.SetActive(false);
+            finishLight.SetActive(true);
+        } else
+        {
+            npcProgress++;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("GameEndCollider"))
+        {
+            // Change Scene
+        }
+
         if (collision.gameObject.CompareTag("FoodShop"))
         {
             userInterface.ShowShopInterface("FoodShop", true);
@@ -193,6 +224,11 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Pharmacy"))
         {
             userInterface.ShowShopInterface("Pharmacy",true);
+        }
+
+        if (collision.gameObject.CompareTag("Druggie"))
+        {
+            userInterface.ShowShopInterface("Druggie", true);
         }
 
         if (collision.gameObject.CompareTag("Motel"))
@@ -232,6 +268,11 @@ public class Player : MonoBehaviour
             userInterface.ShowShopInterface("Pharmacy", false);
         }
 
+        if (collision.gameObject.CompareTag("Druggie"))
+        {
+            userInterface.ShowShopInterface("Druggie", false);
+        }
+
         if (collision.gameObject.CompareTag("Motel"))
         {
             canSleepAtMotel = false;
@@ -264,4 +305,5 @@ public class Player : MonoBehaviour
     public float mental { get { return _mentalHealth; } set { _mentalHealth = value; }}
     public float hungerAndThirst { get { return _hungerAndThirst; } set { _hungerAndThirst = value; }}
     public int money { get { return _money; } set { _money = value; }}
+    public bool workState { get { return hasAlreadyWorkedToday; } set { hasAlreadyWorkedToday = value; } }
 }

@@ -80,6 +80,7 @@ public class InventorySlot : MonoBehaviour
 
                     player.userInterface.UpdatePlayerUI();
                     player.inventoryUI.UpdateUI();
+                    StartCoroutine(player.eventHandler.ShowEvent($"You Used: {item.itemName}", 2));
                     inventory.Remove(item);
                 }
             }

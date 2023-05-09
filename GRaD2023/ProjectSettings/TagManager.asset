@@ -13,6 +13,8 @@ TagManager:
   - Office
   - Pharmacy
   - FoodShop
+  - Druggie
+  - GameEndCollider
   layers:
   - Default
   - TransparentFX
