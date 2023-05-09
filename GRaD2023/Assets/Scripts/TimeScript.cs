@@ -32,6 +32,8 @@ public class TimeScript : MonoBehaviour
 
     float tempDecay;
 
+    public GameObject steve;
+
     private bool diedBool = false;
     private bool _privateDeathBool;
     public float dayEndTime = 1440f;
@@ -66,6 +68,13 @@ public class TimeScript : MonoBehaviour
                 statDecay(player, timer, 0.0025f, 0.01f, 0.005f);
                 timeProgression(sun, timer);
                 trackVitals(player);
+
+                if(timer >= 1200 && timer <= dayEndTime){
+                    steve.SetActive(true);
+                }
+                else{
+                    steve.SetActive(false);
+                }
 	    }
     }
 
