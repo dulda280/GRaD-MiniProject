@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
     private int jobCashierWorkHours = 6;
     private bool canWorkAtjobCashier = false;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +79,7 @@ public class Player : MonoBehaviour
             {
                 SleepAtMotel();
                 canSleepAtMotel = false;
+                Debug.Log("");
             }
         }
 
@@ -89,6 +89,7 @@ public class Player : MonoBehaviour
             {
                 WorkJob(jobCashier);
                 canWorkAtjobCashier = false;
+                Debug.Log("CASHIER");
             }
         }
 
@@ -98,6 +99,7 @@ public class Player : MonoBehaviour
             {
                 WorkJob(jobDeliveryDriver);
                 canWorkAtJobDelivery = false;
+                Debug.Log("DELIVERY");
             }
         }
 
@@ -107,6 +109,7 @@ public class Player : MonoBehaviour
             {
                 WorkJob(jobOfficeWorker);
                 canWorkAtJobOffice = false;
+                Debug.Log("OFFICE");
             }
         }
     }
@@ -146,7 +149,7 @@ public class Player : MonoBehaviour
 
         if (jobType == jobOfficeWorker)
         {
-            var earnedMoney = (jobOfficeWorkerSalary * jobOfficeWorkerSalary);
+            var earnedMoney = (jobOfficeWorkerSalary * jobOfficeWorkerWorkHours);
             money += earnedMoney;
             StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobOfficeWorkerWorkHours} hrs worked", 4));
             // Pass time by time script
