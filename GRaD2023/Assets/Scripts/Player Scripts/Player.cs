@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     // Job System
     private string jobDeliveryDriver = "Delivery Driver";
     private int jobDeliveryDriverSalary = 15;
-    private int jobDeliveryDriverWorkHours = 4;
+    private float jobDeliveryDriverWorkHours = 4;
     private bool canWorkAtJobDelivery = false;
 
     private string jobOfficeWorker = "Office Worker";
@@ -142,25 +142,28 @@ public class Player : MonoBehaviour
         if (jobType == jobDeliveryDriver)
         {
             var earnedMoney = (jobDeliveryDriverSalary * jobDeliveryDriverWorkHours);
-            money += earnedMoney;
+            money += Mathf.FloorToInt(earnedMoney);
             StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobDeliveryDriverWorkHours} hrs worked", 4));
             // Pass time by time script
+            workTimeProgression(jobDeliveryDriverWorkHours, timeScript);
         }
 
         if (jobType == jobOfficeWorker)
         {
             var earnedMoney = (jobOfficeWorkerSalary * jobOfficeWorkerWorkHours);
-            money += earnedMoney;
+            money += Mathf.FloorToInt(earnedMoney);
             StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobOfficeWorkerWorkHours} hrs worked", 4));
             // Pass time by time script
+            workTimeProgression(jobOfficeWorkerWorkHours, timeScript);
         }
 
         if (jobType == jobCashier)
         {
             var earnedMoney = (jobCashierSalary * jobCashierWorkHours);
-            money += earnedMoney;
+            money += Mathf.FloorToInt(earnedMoney);
             StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobCashierWorkHours} hrs worked", 4));
             // Pass time by time script
+            workTimeProgression(jobCashierWorkHours, timeScript);
         }
     }
 
@@ -235,6 +238,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void workTimeProgression(float timeWorked, TimeScript timeObj){
+        var tempTime = timeObj.timeVal;
+        timeObj.timeVal = tempTime + (timeWorked*60f);
+        timeObj.intensityMod = timeObj.intensityMod + (timeWorked/20f);
+    }
 
     // Getters and Setters
     public float health { get { return _physicalHealth; } set { _physicalHealth = value; }}

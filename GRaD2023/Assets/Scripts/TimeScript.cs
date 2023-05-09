@@ -48,6 +48,8 @@ public class TimeScript : MonoBehaviour
 
     public bool deathBool{ get { return _privateDeathBool; } set { _privateDeathBool= value; }}
 
+    public float timeVal{ get { return timer; } set{timer = value;}}
+    public float intensityMod{get {return sun.intensity;} set{sun.intensity = value;}}
     // Start is called before the first frame update
     void Start()
     {
@@ -103,6 +105,8 @@ public class TimeScript : MonoBehaviour
         //secondMinute.text = currentTime[3].ToString();
         testTimer.text = Mathf.FloorToInt(time-480).ToString();
         
+        
+
     }
 
     private void statDecay(Player target, float time, float hungerDecay, float healtDecay, float mentalHealthDecay){
