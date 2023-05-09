@@ -15,6 +15,7 @@ TagManager:
   - FoodShop
   - Druggie
   - GameEndCollider
+  - Harrassers
   layers:
   - Default
   - TransparentFX
