@@ -167,10 +167,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Merchant"))
+        if (collision.gameObject.CompareTag("FoodShop"))
         {
-            Debug.Log("Can trade with merchant");
-            userInterface.ShowShopInterface(true);
+            userInterface.ShowShopInterface("FoodShop", true);
+        }
+
+        if (collision.gameObject.CompareTag("Pharmacy"))
+        {
+            userInterface.ShowShopInterface("Pharmacy",true);
         }
 
         if (collision.gameObject.CompareTag("Motel"))
@@ -200,9 +204,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Merchant"))
+        if (collision.gameObject.CompareTag("FoodShop"))
         {
-            userInterface.ShowShopInterface(false);
+            userInterface.ShowShopInterface("FoodShop",false);
+        }
+
+        if (collision.gameObject.CompareTag("Pharmacy"))
+        {
+            userInterface.ShowShopInterface("Pharmacy", false);
         }
 
         if (collision.gameObject.CompareTag("Motel"))

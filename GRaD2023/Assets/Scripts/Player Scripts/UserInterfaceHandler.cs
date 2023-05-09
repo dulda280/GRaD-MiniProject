@@ -4,10 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.UI;
 
 public class UserInterfaceHandler : MonoBehaviour
 {
-    public GameObject shopPanel;
+    public GameObject supermarketShopPanel;
+    public GameObject pharmacyShopPanel;
     public GameObject escapeMenu;
     public Button quitToMenuButton;
     public Button continueButton;
@@ -51,10 +53,19 @@ public class UserInterfaceHandler : MonoBehaviour
        
     }
 
-    public void ShowShopInterface(bool state)
+    public void ShowShopInterface(string shopType, bool state)
     {
-        shopPanel.SetActive(state);
+        if (shopType == "FoodShop")
+        {
+            supermarketShopPanel.SetActive(state);
+        }
+
+        if (shopType == "Pharmacy")
+        {
+            pharmacyShopPanel.SetActive(state);
+        }
     }
+
 
     public void UpdatePlayerUI()
     {
