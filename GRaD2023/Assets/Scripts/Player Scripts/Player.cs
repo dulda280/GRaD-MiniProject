@@ -10,10 +10,10 @@ using static UnityEngine.Video.VideoPlayer;
 public class Player : MonoBehaviour
 {
     // Player Variables
-    float _physicalHealth = 10;
-    float _mentalHealth = 10;
-    private float _hungerAndThirst = 40;
-    private int _money = 5;
+    [Range(0, 100)]private float _physicalHealth = 100;
+    [Range(0, 100)] private float _mentalHealth = 50;
+    [Range(0, 100)] private float _hungerAndThirst = 40;
+    [Range(0, 99999)] private int _money = 5;
     private float movementSpeed = 5f;
     public Rigidbody2D rigidBody;
     Vector2 movement;
@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     private bool canSleepAtMotel = false;
 
     // Job System
+    private bool hasAlreadyWorkedToday = false;
+
     private string jobDeliveryDriver = "Delivery Driver";
     private int jobDeliveryDriverSalary = 15;
     private float jobDeliveryDriverWorkHours = 4;
@@ -131,39 +133,50 @@ public class Player : MonoBehaviour
             money -= motelSleepPrice;
             timeScript.ResetTime();
             StartCoroutine(eventHandler.ShowEvent($"I feel well rested", 1));
+            hasAlreadyWorkedToday = false;
         } else
         {
-            StartCoroutine(eventHandler.ShowEvent($"I can't afford to stay at this Motel, price is {motelSleepPrice}$ and you have {money}$", 4));
+            StartCoroutine(eventHandler.ShowEvent($"I can't afford to stay at this Motel, price is {motelSleepPrice}$ and you have {money}$", 3));
         }
     }
 
     private void WorkJob(string jobType)
     {
-        if (jobType == jobDeliveryDriver)
+        if (!hasAlreadyWorkedToday)
         {
-            var earnedMoney = (jobDeliveryDriverSalary * jobDeliveryDriverWorkHours);
-            money += Mathf.FloorToInt(earnedMoney);
-            StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobDeliveryDriverWorkHours} hrs worked", 4));
-            // Pass time by time script
-            workTimeProgression(jobDeliveryDriverWorkHours, timeScript);
-        }
+            if (jobType == jobDeliveryDriver)
+            {
+                var earnedMoney = (jobDeliveryDriverSalary * jobDeliveryDriverWorkHours);
+                money += Mathf.FloorToInt(earnedMoney);
+                StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobDeliveryDriverWorkHours} hrs worked", 3));
+                // Pass time by time script
+                workTimeProgression(jobDeliveryDriverWorkHours, timeScript);
+                mental -= jobDeliveryDriverWorkHours * 3;
+            }
 
-        if (jobType == jobOfficeWorker)
-        {
-            var earnedMoney = (jobOfficeWorkerSalary * jobOfficeWorkerWorkHours);
-            money += Mathf.FloorToInt(earnedMoney);
-            StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobOfficeWorkerWorkHours} hrs worked", 4));
-            // Pass time by time script
-            workTimeProgression(jobOfficeWorkerWorkHours, timeScript);
-        }
+            if (jobType == jobOfficeWorker)
+            {
+                var earnedMoney = (jobOfficeWorkerSalary * jobOfficeWorkerWorkHours);
+                money += Mathf.FloorToInt(earnedMoney);
+                StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobOfficeWorkerWorkHours} hrs worked", 3));
+                // Pass time by time script
+                workTimeProgression(jobOfficeWorkerWorkHours, timeScript);
+                mental -= jobOfficeWorkerWorkHours * 3;
+            }
 
-        if (jobType == jobCashier)
+            if (jobType == jobCashier)
+            {
+                var earnedMoney = (jobCashierSalary * jobCashierWorkHours);
+                money += Mathf.FloorToInt(earnedMoney);
+                StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobCashierWorkHours} hrs worked", 3));
+                // Pass time by time script
+                workTimeProgression(jobCashierWorkHours, timeScript);
+                mental -= jobCashierWorkHours * 3;
+            }
+            hasAlreadyWorkedToday = true;
+        } else
         {
-            var earnedMoney = (jobCashierSalary * jobCashierWorkHours);
-            money += Mathf.FloorToInt(earnedMoney);
-            StartCoroutine(eventHandler.ShowEvent($"I earned {earnedMoney}$ for a total of {jobCashierWorkHours} hrs worked", 4));
-            // Pass time by time script
-            workTimeProgression(jobCashierWorkHours, timeScript);
+            StartCoroutine(eventHandler.ShowEvent($"I have already worked today...", 2));
         }
     }
 
@@ -188,19 +201,19 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Supermarket"))
         {
-            StartCoroutine(eventHandler.ShowEvent($"Press 'E' to work here for {jobCashierSalary}$ for a duration of {jobCashierWorkHours} Hrs", 4));
+            StartCoroutine(eventHandler.ShowEvent($"Press 'E' to work here for {jobCashierSalary}$ for a duration of {jobCashierWorkHours} Hrs", 3));
             canWorkAtjobCashier = true;
         }
 
         if (collision.gameObject.CompareTag("DeliveryJob"))
         {
-            StartCoroutine(eventHandler.ShowEvent($"Press 'E' to work here for {jobDeliveryDriverSalary}$ for a duration of {jobDeliveryDriverWorkHours} Hrs", 4));
+            StartCoroutine(eventHandler.ShowEvent($"Press 'E' to work here for {jobDeliveryDriverSalary}$ for a duration of {jobDeliveryDriverWorkHours} Hrs", 3));
             canWorkAtJobDelivery = true;
         }
 
         if (collision.gameObject.CompareTag("Office"))
         {
-            StartCoroutine(eventHandler.ShowEvent($"Press 'E' to work here for {jobOfficeWorkerSalary}$ for a duration of {jobOfficeWorkerWorkHours} Hrs", 4));
+            StartCoroutine(eventHandler.ShowEvent($"Press 'E' to work here for {jobOfficeWorkerSalary}$ for a duration of {jobOfficeWorkerWorkHours} Hrs", 3));
             canWorkAtJobOffice = true;
         }
     }
@@ -241,7 +254,7 @@ public class Player : MonoBehaviour
     private void workTimeProgression(float timeWorked, TimeScript timeObj){
         var tempTime = timeObj.timeVal;
         timeObj.timeVal = tempTime + (timeWorked*60f);
-        timeObj.intensityMod = timeObj.intensityMod + (timeWorked/20f);
+        timeObj.intensityMod = timeObj.intensityMod - (timeWorked/20f);
     }
 
     // Getters and Setters

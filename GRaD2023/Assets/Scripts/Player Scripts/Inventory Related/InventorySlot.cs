@@ -57,26 +57,30 @@ public class InventorySlot : MonoBehaviour
                 inventory.audioManager.ConsumeItemSFX();
                 if (inventory.CheckForConsumables())
                 {
-                    
-                    if (player.health >= 100 || player.mental >= 100 || player.hungerAndThirst >= 100 )
+
+                    player.health += item.physicalHealthAdd;
+                    player.health -= item.physicalHealthRemove;
+                    if (player.health >= 100)
                     {
                         player.health = 100;
-                        player.mental = 100;
-                        player.hungerAndThirst = 100;
-                        player.userInterface.UpdatePlayerUI();
-                        player.inventoryUI.UpdateUI();
-                        inventory.Remove(item);
-                    } else
-                    {
-                        player.hungerAndThirst += item.foodAdd;
-                        player.health += item.physicalHealthAdd;
-                        player.health -= item.physicalHealthRemove;
-                        player.mental += item.mentalHealthAdd;
-                        player.mental -= item.mentalHealthRemove;
-                        player.userInterface.UpdatePlayerUI();
-                        player.inventoryUI.UpdateUI();
-                        inventory.Remove(item);
                     }
+
+                    player.mental += item.mentalHealthAdd;
+                    player.mental -= item.mentalHealthRemove;
+                    if (player.mental >= 100)
+                    {
+                        player.mental = 100;
+                    }
+
+                    player.hungerAndThirst += item.foodAdd;
+                    if (player.hungerAndThirst >= 100)
+                    {
+                        player.hungerAndThirst = 100;
+                    }
+
+                    player.userInterface.UpdatePlayerUI();
+                    player.inventoryUI.UpdateUI();
+                    inventory.Remove(item);
                 }
             }
         }
